@@ -24,6 +24,9 @@
       </div>
     </div>
 
+    <div id="issue-list">
+    </div>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/jquery/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -52,7 +55,11 @@
         }).done(renderIssues);
       });
       renderIssues = function (issues) {
-
+        progressSocket.disconnect();
+        issueList = $('#issue-list')
+        issues.forEach(function (issue) {
+          issueList.append('<div class="panel panel-default"><div class="panel-body">' + issue.key + ' - ' + issue.summary + '</div></div>');
+        });
       };
     </script>
   </body>
