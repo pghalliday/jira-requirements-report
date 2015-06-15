@@ -43,9 +43,6 @@ app.get '/', (req, res) ->
   .then (issues) ->
     res.json issues
 
-app.get '/cache-test-data', (req, res) ->
-  data
-
 server = app.listen 3000, ->
   address = server.address()
   host = address.address
