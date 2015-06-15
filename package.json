@@ -1,0 +1,25 @@
+{
+  "name": "jira-requirements-report",
+  "version": "1.0.0",
+  "description": "Status report for requirements tracked in JIRA",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "coffee index.coffee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pghalliday/jira-requirements-report.git"
+  },
+  "author": "Peter Halliday <pghalliday@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pghalliday/jira-requirements-report/issues"
+  },
+  "homepage": "https://github.com/pghalliday/jira-requirements-report#readme",
+  "dependencies": {
+    "coffee-script": "^1.9.3",
+    "express": "^4.12.4",
+    "jira-requirements-data": "^1.0.0",
+    "q": "^1.4.1"
+  }
+}

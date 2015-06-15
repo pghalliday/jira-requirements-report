@@ -1,0 +1,27 @@
+{
+  "testMode": false,
+  "serverRoot": "https://my.jira.server",
+  "strictSSL": true,
+  "user": "myuser",
+  "pass": "mypassword",
+  "maxResults": 50,
+  "project": "myproject",
+  "issueTypes": [{
+    "name": "Requirement",
+    "inwardLinkTypes": [
+      "is covered by",
+      "is implemented by"
+    ]
+  }, {
+    "name": "Change Request",
+    "inwardLinkTypes": [
+      "is covered by",
+      "is implemented by"
+    ]
+  }, {
+    "name": "Risk",
+    "inwardLinkTypes": [
+      "is covered by"
+    ]
+  }]
+}
