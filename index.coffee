@@ -19,11 +19,14 @@ search = (sessionID) ->
     pass: config.pass
     maxResults: config.maxResults
     project: config.project
-    issueTypes: config.issueTypes
+    requirements: config.requirements
+    tasks: config.tasks
     onTotal: (total) ->
-      io.sockets.in(sessionID).emit 'total', total
-    onIssue: () ->
-      io.sockets.in(sessionID).emit 'issue'
+      io.sockets.in(sessionID).emit 'init',
+        jiraRoot: config.serverRoot
+        total: total
+    onRequirement: () ->
+      io.sockets.in(sessionID).emit 'requirement'
 
 testData = (sessionID) ->
   Q.nfcall(fs.readFile, TEST_DATA)

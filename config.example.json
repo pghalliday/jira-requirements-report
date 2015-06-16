@@ -6,22 +6,76 @@
   "pass": "mypassword",
   "maxResults": 50,
   "project": "myproject",
-  "issueTypes": [{
+  "requirements": [{
     "name": "Requirement",
     "inwardLinkTypes": [
       "is covered by",
       "is implemented by"
-    ]
+    ],
+    "states": {
+      "done": [
+        "done"
+      ],
+      "ready": [
+        "ready for deployment"
+      ]
+    }
   }, {
     "name": "Change Request",
     "inwardLinkTypes": [
       "is covered by",
       "is implemented by"
-    ]
+    ],
+    "states": {
+      "done": [
+        "done"
+      ],
+      "ready": [
+        "ready for deployment"
+      ]
+    }
   }, {
     "name": "Risk",
     "inwardLinkTypes": [
       "is covered by"
-    ]
+    ],
+    "states": {
+      "done": [
+        "done"
+      ],
+      "ready": [
+        "ready for deployment"
+      ]
+    }
+  }],
+  "tasks": [{
+    "name": "Bug",
+    "states": {
+      "done": [
+        "resolved",
+        "verified",
+        "closed"
+      ]
+    }
+  }, {
+    "name": "Code Review",
+    "states": {
+      "done": [
+        "done"
+      ]
+  }, {
+    "name": "Story",
+    "states": {
+      "done": [
+        "resolved",
+        "verified",
+        "closed"
+      ]
+  }, {
+    "name": "Task",
+    "states": {
+      "done": [
+        "done"
+      ]
   }]
 }
