@@ -38,22 +38,23 @@ $(function () {
   });
 
   requirementHTML = function (requirement) {
-    var panelClass;
+    var panelColor;
     var progressValue;
     var progressMax;
     var progressPercent;
     var progressColor;
+    var requirementColor
     switch (requirement.state) {
       case 'notready':
-        panelClass = 'panel-danger';
+        panelColor = 'panel-danger';
         requirementColor = 'list-group-item-danger';
         break;
       case 'ready':
-        panelClass = 'panel-info';
+        panelColor = 'panel-info';
         requirementColor = 'list-group-item-info';
         break;
       case 'done':
-        panelClass = 'panel-success';
+        panelColor = 'panel-success';
         requirementColor = 'list-group-item-success';
         break;
     }
@@ -61,9 +62,12 @@ $(function () {
     progressMax = tasks.length;
     if (progressMax === 0) {
       progressValue = 0;
-      progressPercent = 100;
+      progressPercent = 0;
       if (requirement.state === 'done') {
         progressColor = 'progress-bar-success'
+        progressPercent = 100;
+      } else if (requirement.state === 'notready') {
+        progressColor = 'progress-bar-info'
       } else {
         progressColor = 'progress-bar-danger'
       }
@@ -73,7 +77,11 @@ $(function () {
       }, 0);
       if (progressValue === progressMax) {
         progressPercent = 100;
-        progressColor = 'progress-bar-success'
+        if (requirement.state === 'notready') {
+          progressColor = 'progress-bar-info'
+        } else {
+          progressColor = 'progress-bar-success'
+        }
       } else {
         progressPercent = (progressValue / progressMax) * 100;
         if (requirement.state === 'done') {
@@ -83,7 +91,7 @@ $(function () {
         }
       }
     }
-    HTML =  '<div class="panel ' + panelClass + '">';
+    HTML =  '<div class="panel ' + panelColor + '">';
     HTML +=   '<div class="list-group" role="tab" id="heading' + requirement.id + '">';
     HTML +=     '<a class="list-group-item ' + requirementColor + '" href="' + jiraRoot + '/browse/' + requirement.key + '" target="_blank"><span class="label label-default">' + requirement.issuetype + '</span> ' + requirement.key + ' - ' + requirement.summary + '</a>';
     HTML +=   '</div>';
@@ -91,15 +99,11 @@ $(function () {
     if (progressMax > 0) {
       HTML +=   '<a role="button" data-toggle="collapse" href="#collapse' + requirement.id + '" aria-expanded="false" aria-controls="collapse' + requirement.id + '">';
     }
-    if (requirement.state === 'notready') {
-      HTML +=     'Linked issues <span class="badge">' + progressMax + '<span>';
-    } else {
-      HTML +=     '<div class="progress">';
-      HTML +=       '<div class="progress-bar ' + progressColor + '" role="progressbar" aria-valuenow="' + progressValue + '" aria-valuemin="0" aria-valuemax="' + progressMax + '" style="width: ' + progressPercent + '%;">';
-      HTML +=         '<span id="progress-span" class="sr-only">' + progressPercent + '% Complete</span>';
-      HTML +=       '</div>';
-      HTML +=     '</div>';
-    }
+    HTML +=     '<div class="progress">';
+    HTML +=       '<div class="progress-bar ' + progressColor + '" role="progressbar" aria-valuenow="' + progressValue + '" aria-valuemin="0" aria-valuemax="' + progressMax + '" style="min-width: 3em; width: ' + progressPercent + '%;">';
+    HTML +=         '<span id="progress-span">' + progressValue + ' / ' + progressMax + '</span>';
+    HTML +=       '</div>';
+    HTML +=     '</div>';
     if (progressMax > 0) {
       HTML +=   '</a>';
     }
