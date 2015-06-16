@@ -18,13 +18,29 @@
     <![endif]-->
   </head>
   <body>
-    <div class="progress">
-      <div id="progress-bar"class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-        <span id="progress-span" class="sr-only">0% Complete</span>
-      </div>
-    </div>
+    <div class="container">
 
-    <div id="issue-list">
+      <div id="progress-panel" class="panel panel-info hidden">
+
+        <div class="panel-heading">
+          Querying JIRA for requirements...
+        </div>
+
+        <div class="panel-body">
+
+          <div class="progress">
+            <div id="progress-bar"class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+              <span id="progress-span" class="sr-only">0% Complete</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div id="issue-list">
+      </div>
+
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -32,35 +48,6 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-      var progressSocket = io();
-      var currentProgress = 0;
-      updateProgress = function () {
-        $('#progress-bar').css('width', currentProgress + '%').attr('aria-valuenow', currentProgress);
-        $('#progress-span').text(currentProgress + '% Complete');
-      };
-      progressSocket.on('total', function (total) {
-        $('#progress-bar').attr('aria-valuemax', total);
-        currentProgress = 0;
-        updateProgress();
-      });
-      progressSocket.on('issue', function () {
-        currentProgress++;
-        updateProgress();
-      });
-      progressSocket.on('connect', function () {
-        $.ajax({
-          url: '/data',
-          accepts: 'application/json',
-        }).done(renderIssues);
-      });
-      renderIssues = function (issues) {
-        progressSocket.disconnect();
-        issueList = $('#issue-list')
-        issues.forEach(function (issue) {
-          issueList.append('<div class="panel panel-default"><div class="panel-body">' + issue.key + ' - ' + issue.summary + '</div></div>');
-        });
-      };
-    </script>
+    <script src="/js/app.js"></script>
   </body>
 </html>
