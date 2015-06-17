@@ -63,6 +63,7 @@
       "done": [
         "Done"
       ]
+    }
   }, {
     "name": "Story",
     "states": {
@@ -71,11 +72,13 @@
         "Verified",
         "Closed"
       ]
+    }
   }, {
     "name": "Task",
     "states": {
       "done": [
         "Done"
       ]
+    }
   }]
 }
