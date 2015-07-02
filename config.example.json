@@ -6,6 +6,8 @@
   "pass": "mypassword",
   "maxResults": 50,
   "project": "myproject",
+  "requirementsRapidView": 123,
+  "tasksRapidView": 456,
   "requirements": [{
     "name": "Requirement",
     "inwardLinkTypes": [

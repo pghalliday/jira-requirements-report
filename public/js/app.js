@@ -1,39 +1,91 @@
 $(function () {
   var progressSocket = io();
-  var currentProgress = 0;
-  var currentTotal = 0;
+  var requirementSprintsProgress = 0;
+  var requirementSprintsTotal = 0;
+  var taskSprintsProgress = 0;
+  var taskSprintsTotal = 0;
+  var requirementsProgress = 0;
+  var requirementsTotal = 0;
   var jiraRoot;
 
-  updateProgress = function () {
-    percent = (currentProgress / currentTotal) * 100;
-    $('#progress-bar').css('width', percent + '%').attr('aria-valuenow', currentProgress);
-    $('#progress-span').text(percent + '% Complete');
+  updateRequirementSprintsProgress = function () {
+    percent = (requirementSprintsProgress / requirementSprintsTotal) * 100;
+    $('#requirement-sprints-progress-bar').attr('aria-valuemax', requirementSprintsTotal);
+    $('#requirement-sprints-progress-bar').css('width', percent + '%').attr('aria-valuenow', requirementSprintsProgress);
+    $('#requirement-sprints-progress-span').text('Requirement Sprints ' + requirementSprintsProgress + '/' + requirementSprintsTotal);
   };
 
-  progressSocket.on('init', function (params) {
-    currentTotal = params.total;
-    jiraRoot = params.jiraRoot;
-    $('#progress-panel').removeClass('hidden')
-    $('#progress-bar').attr('aria-valuemax', total);
-    currentProgress = 0;
-    updateProgress();
+  progressSocket.on('requirementSprintsTotal', function (total) {
+    requirementSprintsTotal = total;
+    requirementSprintsProgress = 0;
+    updateRequirementSprintsProgress();
+  });
+
+  progressSocket.on('requirementSprint', function () {
+    requirementSprintsProgress++;
+    updateRequirementSprintsProgress();
+  });
+
+  updateTaskSprintsProgress = function () {
+    percent = (taskSprintsProgress / taskSprintsTotal) * 100;
+    $('#task-sprints-progress-bar').attr('aria-valuemax', taskSprintsTotal);
+    $('#task-sprints-progress-bar').css('width', percent + '%').attr('aria-valuenow', taskSprintsProgress);
+    $('#task-sprints-progress-span').text('Task Sprints ' + taskSprintsProgress + '/' + taskSprintsTotal);
+  };
+
+  progressSocket.on('taskSprintsTotal', function (total) {
+    taskSprintsTotal = total;
+    taskSprintsProgress = 0;
+    updateTaskSprintsProgress();
+  });
+
+  progressSocket.on('taskSprint', function () {
+    taskSprintsProgress++;
+    updateTaskSprintsProgress();
+  });
+
+  updateRequirementsProgress = function () {
+    percent = (requirementsProgress / requirementsTotal) * 100;
+    $('#requirements-progress-bar').attr('aria-valuemax', requirementsTotal);
+    $('#requirements-progress-bar').css('width', percent + '%').attr('aria-valuenow', requirementsProgress);
+    $('#requirements-progress-span').text('Requirements ' + requirementsProgress + '/' + requirementsTotal);
+  };
+
+  progressSocket.on('requirementsTotal', function (total) {
+    requirementsTotal = total;
+    requirementsProgress = 0;
+    updateRequirementsProgress();
   });
 
   progressSocket.on('requirement', function () {
-    currentProgress++;
-    updateProgress();
+    requirementsProgress++;
+    updateRequirementsProgress();
+  });
+
+  progressSocket.on('init', function (_jiraRoot) {
+    $('#progress-panel').removeClass('hidden')
+    jiraRoot = _jiraRoot;
   });
 
   progressSocket.on('connect', function () {
     $.ajax({
       url: '/data',
       accepts: 'application/json',
-    }).done(function (requirements) {
+    }).done(function (data) {
+      progressSocket.disconnect();
+      requirementSprintsTotal = data.requirementSprints.length;
+      requirementSprintsProgress = data.requirementSprints.length;
+      updateRequirementSprintsProgress();
+      taskSprintsTotal = data.taskSprints.length;
+      taskSprintsProgress = data.taskSprints.length;
+      updateTaskSprintsProgress();
+      requirementsTotal = data.requirements.length;
+      requirementsProgress = data.requirements.length;
+      updateRequirementsProgress();
       setTimeout(function () {
-        progressSocket.disconnect();
         $('#progress-panel').addClass('hidden');
       }, 1000);
-      renderRequirements(requirements);
+      renderRequirements(data.requirements);
     });
   });
 
