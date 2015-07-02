@@ -130,11 +130,14 @@ $(function () {
       progressPercent = 0;
       if (requirement.state === 'done') {
         progressColor = 'progress-bar-success'
+        tasksPanelColor = 'panel-success'
         progressPercent = 100;
       } else if (requirement.state === 'notready') {
         progressColor = 'progress-bar-info'
+        tasksPanelColor = 'panel-info'
       } else {
         progressColor = 'progress-bar-danger'
+        tasksPanelColor = 'panel-danger'
       }
     } else {
       progressValue = tasks.reduce(function (count, task) {
@@ -144,25 +147,29 @@ $(function () {
         progressPercent = 100;
         if (requirement.state === 'notready') {
           progressColor = 'progress-bar-info'
+          tasksPanelColor = 'panel-info'
         } else {
           progressColor = 'progress-bar-success'
+          tasksPanelColor = 'panel-success'
         }
       } else {
         progressPercent = (progressValue / progressMax) * 100;
         if (requirement.state === 'done') {
           progressColor = 'progress-bar-danger'
+          tasksPanelColor = 'panel-danger'
         } else {
           progressColor = 'progress-bar-info'
+          tasksPanelColor = 'panel-info'
         }
       }
     }
     HTML =  '<div class="panel ' + panelColor + '">';
-    HTML +=   '<div class="list-group" role="tab" id="heading' + requirement.id + '">';
+    HTML +=   '<div class="list-group">';
     HTML +=     '<a class="list-group-item ' + requirementColor + '" href="' + jiraRoot + '/browse/' + requirement.key + '" target="_blank"><span class="label label-default">' + requirement.issuetype + '</span> ' + requirement.key + ' - ' + requirement.summary + '</a>';
     HTML +=   '</div>';
     HTML +=   '<div class="panel-body">';
     if (progressMax > 0) {
-      HTML +=   '<a role="button" data-toggle="collapse" href="#collapse' + requirement.id + '" aria-expanded="false" aria-controls="collapse' + requirement.id + '">';
+      HTML +=   '<a role="button" data-toggle="collapse" href="#collapse' + requirement.id + '">';
     }
     HTML +=     '<div class="progress">';
     HTML +=       '<div class="progress-bar ' + progressColor + '" role="progressbar" aria-valuenow="' + progressValue + '" aria-valuemin="0" aria-valuemax="' + progressMax + '" style="min-width: 3em; width: ' + progressPercent + '%;">';
@@ -173,11 +180,11 @@ $(function () {
       HTML +=   '</a>';
     }
     HTML +=   '</div>';
-    HTML +=   '<div id="collapse' + requirement.id + '" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading' + requirement.id + '">';
-    HTML +=     '<div class="list-group">';
+    HTML +=   '<div id="collapse' + requirement.id + '" class="panel-collapse collapse">';
+    HTML +=     '<div class="list-group" style="padding: 0px 15px 15px;">';
     tasks.forEach(function (task) {
       var taskColor = (task.state === 'done' ? 'list-group-item-success' : 'list-group-item-danger');
-      HTML +=       '<a class="list-group-item ' + taskColor + '" href="' + jiraRoot + '/browse/' + task.key + '" target="_blank"><span class="label label-default">' + task.issuetype + '</span> ' + task.key + ' - ' + task.summary + '</a>';
+      HTML +=     '<a class="list-group-item ' + taskColor + '" href="' + jiraRoot + '/browse/' + task.key + '" target="_blank"><span class="label label-default">' + task.issuetype + '</span> ' + task.key + ' - ' + task.summary + '</a>';
     });
     HTML +=     '</div>';
     HTML +=   '</div>';
