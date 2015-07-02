@@ -1,5 +1,5 @@
 $(function () {
-  var progressSocket = io();
+  var dataSocket = io();
   var requirementSprintsProgress = 0;
   var requirementSprintsTotal = 0;
   var taskSprintsProgress = 0;
@@ -15,13 +15,13 @@ $(function () {
     $('#requirement-sprints-progress-span').text('Requirement Sprints ' + requirementSprintsProgress + '/' + requirementSprintsTotal);
   };
 
-  progressSocket.on('requirementSprintsTotal', function (total) {
+  dataSocket.on('requirementSprintsTotal', function (total) {
     requirementSprintsTotal = total;
     requirementSprintsProgress = 0;
     updateRequirementSprintsProgress();
   });
 
-  progressSocket.on('requirementSprint', function () {
+  dataSocket.on('requirementSprint', function () {
     requirementSprintsProgress++;
     updateRequirementSprintsProgress();
   });
@@ -33,13 +33,13 @@ $(function () {
     $('#task-sprints-progress-span').text('Task Sprints ' + taskSprintsProgress + '/' + taskSprintsTotal);
   };
 
-  progressSocket.on('taskSprintsTotal', function (total) {
+  dataSocket.on('taskSprintsTotal', function (total) {
     taskSprintsTotal = total;
     taskSprintsProgress = 0;
     updateTaskSprintsProgress();
   });
 
-  progressSocket.on('taskSprint', function () {
+  dataSocket.on('taskSprint', function () {
     taskSprintsProgress++;
     updateTaskSprintsProgress();
   });
@@ -51,28 +51,28 @@ $(function () {
     $('#requirements-progress-span').text('Requirements ' + requirementsProgress + '/' + requirementsTotal);
   };
 
-  progressSocket.on('requirementsTotal', function (total) {
+  dataSocket.on('requirementsTotal', function (total) {
     requirementsTotal = total;
     requirementsProgress = 0;
     updateRequirementsProgress();
   });
 
-  progressSocket.on('requirement', function () {
+  dataSocket.on('requirement', function () {
     requirementsProgress++;
     updateRequirementsProgress();
   });
 
-  progressSocket.on('init', function (_jiraRoot) {
+  dataSocket.on('init', function (_jiraRoot) {
     $('#progress-panel').removeClass('hidden')
     jiraRoot = _jiraRoot;
   });
 
-  progressSocket.on('connect', function () {
+  dataSocket.on('connect', function () {
     $.ajax({
       url: '/data',
       accepts: 'application/json',
     }).done(function (data) {
-      progressSocket.disconnect();
+      dataSocket.disconnect();
       requirementSprintsTotal = data.requirementSprints.length;
       requirementSprintsProgress = data.requirementSprints.length;
       updateRequirementSprintsProgress();
@@ -85,9 +85,22 @@ $(function () {
       setTimeout(function () {
         $('#progress-panel').addClass('hidden');
       }, 1000);
-      renderRequirements(data.requirements);
+      renderData(data);
     });
   });
+
+  sectionHTML = function (divId, title) {
+    var HTML = '<div class="panel panel-info">';
+    HTML +=      '<div class="panel-heading">';
+    HTML +=        title;
+    HTML +=      '</div>';
+    HTML +=      '<div class="panel-body">';
+    HTML +=        '<div id="' + divId + '">';
+    HTML +=        '</div>';
+    HTML +=      '</div>';
+    HTML +=    '</div>';
+    return HTML;
+  }
 
   requirementHTML = function (requirement) {
     var panelColor;
@@ -172,8 +185,49 @@ $(function () {
     return HTML;
   }
 
-  renderRequirements = function (requirements) {
-    requirementList = $('#requirement-list')
+  renderData = function (data) {
+    taskSprintsbyTaskId = data.taskSprints.reduce(function (index, sprint) {
+      sprint.issues.forEach(function (issue) {
+        index[issue] = sprint;
+      });
+      return index;
+    }, Object.create(null));
+    data.requirements.forEach(function (requirement) {
+      requirement.issuelinks.forEach(function (task) {
+        task.sprint = taskSprintsbyTaskId[task.id];
+      });
+    });
+    requirementsIndex = data.requirements.reduce(function (index, requirement, i) {
+      index[requirement.id] = i;
+      return index;
+    }, Object.create(null));
+    data.requirementSprints.forEach(function (sprint) {
+      sprint.issues.forEach(function (requirementId, i, issues) {
+        requirement = data.requirements[requirementsIndex[requirementId]];
+        if (requirement) {
+          delete data.requirements[requirementsIndex[requirementId]];
+          issues[i] = requirement;
+        } else {
+          delete issues[i];
+        }
+      });
+      renderSprint(sprint);
+    });
+    renderBacklog(data.requirements);
+  };
+
+  addSection = function (divId, title) {
+    sectionsDiv = $('#sections');
+    sectionsDiv.append(sectionHTML(divId, title))
+  };
+
+  renderSprint = function (sprint) {
+
+  };
+
+  renderBacklog = function (requirements) {
+    addSection('backlog-requirements', 'Backlog');
+    requirementList = $('#backlog-requirements')
     requirements.forEach(function (requirement) {
       requirementList.append(requirementHTML(requirement));
     });

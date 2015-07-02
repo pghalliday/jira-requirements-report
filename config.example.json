@@ -8,6 +8,10 @@
   "project": "myproject",
   "requirementsRapidView": 123,
   "tasksRapidView": 456,
+  "excludedStates": [
+    "Parked",
+    "Rejected"
+  ],
   "requirements": [{
     "name": "Requirement",
     "inwardLinkTypes": [

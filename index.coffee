@@ -23,6 +23,7 @@ search = (sessionID) ->
     tasksRapidView: config.tasksRapidView
     requirements: config.requirements
     tasks: config.tasks
+    excludedStates: config.excludedStates
     onRequirementSprintsTotal: (total) ->
       io.sockets.in(sessionID).emit 'requirementSprintsTotal', total
     onRequirementSprint: () ->
@@ -59,6 +60,7 @@ data = (sessionID) ->
 app.use express.static 'public'
 app.use '/bootstrap', express.static 'node_modules/bootstrap/dist'
 app.use '/jquery', express.static 'node_modules/jquery/dist'
+app.use '/q.js', express.static 'node_modules/q/q.js'
 
 app.get '/data', (req, res) ->
   data(req.sessionID)
