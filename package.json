@@ -4,7 +4,10 @@
   "description": "Status report for requirements tracked in JIRA",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "coffee index.coffee"
+    "build": "browserify -t coffee-reactify client/cjsx/app.cjsx > client/public/js/app.js",
+    "server": "coffee server/index.coffee",
+    "prestart": "npm run build && npm run server",
+    "start": "echo started"
   },
   "repository": {
     "type": "git",
@@ -17,11 +20,11 @@
   },
   "homepage": "https://github.com/pghalliday/jira-requirements-report#readme",
   "dependencies": {
-    "bootstrap": "^3.3.4",
+    "browserify": "^10.2.4",
+    "coffee-reactify": "^4.0.0",
     "coffee-script": "^1.9.3",
     "express": "^4.12.4",
     "jira-requirements-data": "^1.2.5",
-    "jquery": "^2.1.4",
     "q": "^1.4.1",
     "socket.io": "^1.3.5"
   }

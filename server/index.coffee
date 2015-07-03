@@ -57,10 +57,8 @@ data = (sessionID) ->
   else
     search sessionID
 
-app.use express.static 'public'
-app.use '/bootstrap', express.static 'node_modules/bootstrap/dist'
-app.use '/jquery', express.static 'node_modules/jquery/dist'
-app.use '/q.js', express.static 'node_modules/q/q.js'
+app.use express.static 'client/public'
+app.use '/js/vendor/q.js', express.static 'node_modules/q/q.js'
 
 app.get '/data', (req, res) ->
   data(req.sessionID)

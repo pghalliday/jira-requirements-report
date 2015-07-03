@@ -1,4 +1,5 @@
 $(function () {
+
   var dataSocket = io();
   var requirementSprintsProgress = 0;
   var requirementSprintsTotal = 0;
