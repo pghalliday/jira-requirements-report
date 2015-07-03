@@ -229,7 +229,11 @@ $(function () {
   };
 
   renderSprint = function (sprint) {
-
+    addSection('sprint-' + sprint.id, sprint.name);
+    requirementList = $('#sprint-' + sprint.id)
+    sprint.issues.forEach(function (requirement) {
+      requirementList.append(requirementHTML(requirement));
+    });
   };
 
   renderBacklog = function (requirements) {
