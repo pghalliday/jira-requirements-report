@@ -4,7 +4,7 @@
   "description": "Status report for requirements tracked in JIRA",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "mkdir -p client/public/js && browserify -t coffee-reactify client/cjsx/app.cjsx > client/public/js/app.js",
+    "build": "mkdir -p client/public/js && browserify -t coffee-reactify --extension='.cjsx' client/cjsx/app.cjsx > client/public/js/app.js",
     "server": "coffee server/index.coffee",
     "prestart": "npm run build && npm run server",
     "start": "echo started"
@@ -24,8 +24,10 @@
     "coffee-reactify": "^4.0.0",
     "coffee-script": "^1.9.3",
     "express": "^4.12.4",
+    "flux": "^2.0.3",
     "jira-requirements-data": "^1.2.5",
     "q": "^1.4.1",
+    "react": "^0.13.3",
     "socket.io": "^1.3.5"
   }
 }
