@@ -1,4 +1,4 @@
 node_modules
 config.json
 npm-debug.log
-/client/public/js/app.js
+/client/public/js/index.js
