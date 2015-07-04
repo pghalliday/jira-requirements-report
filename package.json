@@ -4,7 +4,7 @@
   "description": "Status report for requirements tracked in JIRA",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "mkdir -p client/public/js && browserify -t coffee-reactify --extension='.cjsx' client/src/index.cjsx > client/public/js/index.js",
+    "build": "mkdir -p client/public/js && browserify -t coffee-reactify --extension='.cjsx' --extension='.coffee' -o client/public/js/index.js client/src/app.cjsx",
     "server": "coffee server/index.coffee",
     "prestart": "npm run build && npm run server",
     "start": "echo started"
