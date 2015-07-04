@@ -6,13 +6,14 @@ request = require 'superagent'
 module.exports = ->
   progressSocket = io()
   for id in appConstants.PROGRESS_BAR_IDS
-    progressSocket.on appConstants.PROGRESS_BARS[id].totalMessage, (total) =>
-      appActions.initProgress id, total
-    progressSocket.on appConstants.PROGRESS_BARS[id].itemMessage, =>
-      appActions.incrementProgress id
-  progressSocket.on 'init', (jiraRoot) =>
+    do (id) ->
+      progressSocket.on appConstants.PROGRESS_BARS[id].totalMessage, (total) ->
+        appActions.initProgress id, total
+      progressSocket.on appConstants.PROGRESS_BARS[id].itemMessage, ->
+        appActions.incrementProgress id
+  progressSocket.on 'init', (jiraRoot) ->
     appActions.setJiraRoot jiraRoot
-  progressSocket.on 'connect', =>
+  progressSocket.on 'connect', ->
     appActions.showProgress()
     request.get('/data').set('Accept', 'application/json').end (error, response) ->
       progressSocket.disconnect()
