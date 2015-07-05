@@ -58,7 +58,7 @@ data = (sessionID) ->
     search sessionID
 
 app.use express.static 'client/public'
-app.use '/js/vendor/q.js', express.static 'node_modules/q/q.js'
+app.use '/slick-carousel/', express.static 'node_modules/slick-carousel/slick/'
 
 app.get '/data', (req, res) ->
   data(req.sessionID)
