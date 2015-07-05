@@ -2,9 +2,10 @@ React = require 'react'
 App = require './components/App'
 init = require './lib/init'
 
-React.render(
-  <App />
-  document.getElementById 'app'
-)
-
-init()
+if typeof window isnt 'undefined'
+  window.onload = ->
+    React.render(
+      <App />
+      document.getElementById 'app'
+    )
+    init()
