@@ -34,30 +34,28 @@ Sections = React.createClass
   render: ->
     sections = this.props.sections
     summaries = (
-      <div>
-        <SectionSummary
-          key={section.key}
-          section={section}
-        />
+      <div key={'section-summary-' + section.key}>
+        <SectionSummary section={section}/>
       </div> for section in sections when section.requirements.length > 0
     )
     tables = (
-      <div>
-        <SectionTable
-          key={section.key}
-          section={section}
-        />
+      <div key={'section-table-' + section.key}>
+        <SectionTable section={section}/>
       </div> for section in sections when section.requirements.length > 0
     )
-    <div className="row">
-      <div className="large-12 columns">
-        <div id="section-summaries">
-          {summaries}
+    <div>
+      <div className="row">
+        <div className="large-8 columns">
+          <div id="section-summaries">
+            {summaries}
+          </div>
         </div>
       </div>
-      <div className="large-12 columns">
-        <div id="section-tables">
-          {tables}
+      <div className="row">
+        <div className="large-12 columns">
+          <div id="section-tables">
+            {tables}
+          </div>
         </div>
       </div>
     </div>
