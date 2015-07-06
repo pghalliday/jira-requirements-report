@@ -29,3 +29,21 @@
 {
   right: -50px;
 }
+
+.tasks-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+.tasks-enter.tasks-enter-active {
+  opacity: 1;
+}
+
+.tasks-leave {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.tasks-leave.tasks-leave-active {
+  opacity: 0.01;
+}

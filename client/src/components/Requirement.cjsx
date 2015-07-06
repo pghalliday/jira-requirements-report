@@ -1,22 +1,25 @@
 React = require 'react'
 Task = require './Task'
 appActions = require '../actions/appActions'
+ReactCSSTransitionGroup = require 'react/lib/ReactCSSTransitionGroup'
 
 Requirement = React.createClass
   _expandToggle: ->
     appActions.toggleExpandRequirement @props.requirement
   render: ->
     requirement = @props.requirement
-    tasksStyle =
-      height: if requirement.expanded then 'auto' else '0px'
-      overflow: 'hidden'
-    rows = (<Task
-      key={task.key}
-      task={task}
-    /> for task in requirement.issuelinks)
+    rows = if requirement.expanded
+      (<Task
+        key={task.key}
+        task={task}
+      /> for task in requirement.issuelinks)
+    else
+      []
     <div>
-      <div>{requirement.issuetype} - {requirement.key} - {requirement.summary} - <button onClick={@_expandToggle}>{rows.length} linked issues</button></div>
-      <div style={tasksStyle}>{rows}</div>
+      <div>{requirement.issuetype} - {requirement.key} - {requirement.summary} - <button onClick={@_expandToggle}>{requirement.issuelinks.length} linked issues</button></div>
+      <ReactCSSTransitionGroup transitionName="tasks">
+        {rows}
+      </ReactCSSTransitionGroup>
     </div>
 
 module.exports = Requirement
