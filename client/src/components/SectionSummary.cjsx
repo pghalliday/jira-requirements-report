@@ -7,6 +7,10 @@ DONE_INDEX = 0
 
 Section = React.createClass
   render: ->
+    tableStyle =
+      width: '100%'
+    cellStyle =
+      textAlign: 'right'
     section = this.props.section
     chartOptions = {}
     chartData = section.requirements.reduce(
@@ -33,9 +37,39 @@ Section = React.createClass
         label: 'Not Ready'
       ]
     )
-    <div>
-      <div>{section.name}</div>
-      <Doughnut data={chartData} options={chartOptions} width="200" height="200" />
+    <div className="row">
+      <div className="large-12 columns panel radius">
+        <div className="row">
+          <div className="large-6 columns">
+            <Doughnut data={chartData} options={chartOptions} width="275" height="275" />
+          </div>
+          <div className="large-6 columns">
+            <h3>{section.name}</h3>
+            <hr/>
+            <table style={tableStyle}>
+              <tr>
+                <th>Done</th>
+                <td style={cellStyle}>{chartData[DONE_INDEX].value}</td>
+              </tr>
+              <tr>
+                <th>Ready</th>
+                <td style={cellStyle}>{chartData[READY_INDEX].value}</td>
+              </tr>
+              <tr>
+                <th>Not Ready</th>
+                <td style={cellStyle}>{chartData[NOTREADY_INDEX].value}</td>
+              </tr>
+            </table>
+            <hr/>
+            <table style={tableStyle}>
+              <tr>
+                <th>Total</th>
+                <td style={cellStyle}>{section.requirements.length}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
 module.exports = Section

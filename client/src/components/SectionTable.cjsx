@@ -7,7 +7,7 @@ Section = React.createClass
     rows = (<Requirement
       key={requirement.key}
       requirement={requirement}
-    /> for requirement in section.requirements when requirement)
+    /> for requirement in section.requirements)
     <div>
       <div>{rows}</div>
     </div>

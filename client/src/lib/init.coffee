@@ -61,4 +61,4 @@ module.exports = ->
         appActions.addSection
           key: 'backlog'
           name: 'Backlog'
-          requirements: data.requirements
+          requirements: data.requirements.filter (requirement) -> typeof requirement isnt 'undefined'
