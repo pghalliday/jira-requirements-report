@@ -13,7 +13,7 @@ ProgressGroup = React.createClass
     /> for id in appConstants.PROGRESS_BAR_IDS)
     <div className={hidden}>
       <div className="row">
-        <div className="large-12 columns">
+        <div className="large-12 small-12 columns">
           <div className="panel callout radius">
             <h5>Querying JIRA requirements data ...</h5>
             {rows}

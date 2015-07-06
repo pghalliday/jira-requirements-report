@@ -6,7 +6,7 @@ ErrorNotification = React.createClass
     hidden = if errorNotification.hidden then 'hide' else ''
     <div className={hidden}>
       <div className="row">
-        <div className="large-12 columns">
+        <div className="large-12 small-12 columns">
           {errorNotification.error}
         </div>
       </div>

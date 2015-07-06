@@ -47,3 +47,22 @@
 .tasks-leave.tasks-leave-active {
   opacity: 0.01;
 }
+
+.chart {
+  width: 175px;
+  height: 175px;
+}
+
+@media (min-width: 470px) {
+  .chart {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+@media (min-width: 700px) {
+  .chart {
+    width: 275px;
+    height: 275px;
+  }
+}

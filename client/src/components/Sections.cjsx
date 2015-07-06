@@ -22,7 +22,7 @@ tablesSettings =
 sectionCount = -1
 slickApplied = false
 
-slickSliders = ->
+initLibs = ->
   newSectionCount = @props.sections.length
   if newSectionCount isnt sectionCount and newSectionCount > 0
     $('#section-summaries').slick summariesSettings
@@ -32,7 +32,7 @@ slickSliders = ->
     sectionCount = newSectionCount
     slickApplied = true
 
-unslickSliders = ->
+uninitLibs = ->
   newSectionCount = @props.sections.length
   if newSectionCount isnt sectionCount and newSectionCount > 0
     if slickApplied
@@ -40,9 +40,9 @@ unslickSliders = ->
       $('#section-tables').slick 'unslick'
 
 Sections = React.createClass
-  componentDidMount: slickSliders
-  componentWillUpdate: unslickSliders
-  componentDidUpdate: slickSliders
+  componentDidMount: initLibs
+  componentWillUpdate: uninitLibs
+  componentDidUpdate: initLibs
   render: ->
     sections = this.props.sections
     summaries = (
@@ -57,14 +57,14 @@ Sections = React.createClass
     )
     <div>
       <div className="row">
-        <div className="large-8 large-offset-2 columns">
+        <div className="large-8 large-offset-2 small-8 small-offset-2 columns">
           <div id="section-summaries">
             {summaries}
           </div>
         </div>
       </div>
       <div className="row">
-        <div className="large-12 columns">
+        <div className="large-12 small-12 columns">
           <div id="section-tables">
             {tables}
           </div>

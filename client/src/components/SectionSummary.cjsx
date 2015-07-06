@@ -1,18 +1,29 @@
 React = require 'react'
 Doughnut = require('react-chartjs').Doughnut
+_ = require 'underscore'
 
 NOTREADY_INDEX = 2
 READY_INDEX = 1
 DONE_INDEX = 0
 
-Section = React.createClass
+SectionSummary = React.createClass
+  getInitialState: ->
+    chartHidden: true
+  componentDidMount: ->
+    @__onresize = _.debounce @_onresize, 250
+    window.addEventListener 'resize', @__onresize
+    @setState
+      chartHidden: false
+  componentWillUnmount: ->
+    window.removeEventListener 'resize', @__onresize
+  _onresize: ->
+    @forceUpdate()
   render: ->
     tableStyle =
       width: '100%'
     cellStyle =
       textAlign: 'right'
-    section = this.props.section
-    chartOptions = {}
+    section = @props.section
     chartData = section.requirements.reduce(
       (data, requirement) ->
         switch requirement.state
@@ -37,13 +48,31 @@ Section = React.createClass
         label: 'Not Ready'
       ]
     )
+    chart = if @state.chartHidden
+      <span>Loading...</span>
+    else
+      chartId = 'chart-section-' + section.key
+      tableId = 'table-section-' + section.key
+      tableDivHeight = $('#' + tableId).height()
+      chartDivWidth = $('#' + chartId).width()
+      chartSize = Math.min(tableDivHeight, chartDivWidth) + 'px'
+      chartStyle =
+        width: chartSize
+        height: chartSize
+      console.log chartSize
+      chartOptions =
+        redraw: true
+      if chartSize isnt '0px'
+        <Doughnut data={chartData} options={chartOptions} style={chartStyle}/>
+      else
+        <span>Loading...</span>
     <div className="row">
-      <div className="large-12 columns panel radius">
+      <div className="large-12 small-12 columns panel radius">
         <div className="row">
-          <div className="large-6 columns">
-            <Doughnut data={chartData} options={chartOptions} width="275" height="275" />
+          <div className="large-6 medium-8 small-12 columns" id={chartId}>
+            {chart}
           </div>
-          <div className="large-6 columns">
+          <div className="large-6 medium-4 small-12 columns" id={tableId}>
             <h3>{section.name}</h3>
             <hr/>
             <table style={tableStyle}>
@@ -72,4 +101,4 @@ Section = React.createClass
       </div>
     </div>
 
-module.exports = Section
+module.exports = SectionSummary
