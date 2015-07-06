@@ -1,7 +1,6 @@
 React = require 'react'
 SectionSummary = require './SectionSummary'
 SectionTable = require './SectionTable'
-Slider = require 'react-slick'
 
 summariesSettings =
   dots: true
@@ -14,7 +13,7 @@ summariesSettings =
 tablesSettings =
   dots: false
   infinite: true
-  speed: 500
+  speed: 0
   slidesToShow: 1
   slidesToScroll: 1
   arrows: false
