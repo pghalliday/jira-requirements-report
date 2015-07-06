@@ -58,7 +58,8 @@ data = (sessionID) ->
     search sessionID
 
 app.use express.static 'client/public'
-app.use '/slick-carousel/', express.static 'node_modules/slick-carousel/slick/'
+app.use '/slick/', express.static 'node_modules/slick-carousel/slick/'
+app.use '/jquery/', express.static 'node_modules/jquery/dist/'
 
 app.get '/data', (req, res) ->
   data(req.sessionID)
