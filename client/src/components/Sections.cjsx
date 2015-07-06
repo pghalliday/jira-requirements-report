@@ -14,7 +14,6 @@ tablesSettings =
   dots: false
   infinite: true
   speed: 500
-  fade: true
   slidesToShow: 1
   slidesToScroll: 1
   arrows: false
@@ -58,7 +57,7 @@ Sections = React.createClass
     )
     <div>
       <div className="row">
-        <div className="large-8 columns">
+        <div className="large-8 large-offset-2 columns">
           <div id="section-summaries">
             {summaries}
           </div>
