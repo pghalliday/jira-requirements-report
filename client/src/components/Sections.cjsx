@@ -20,21 +20,24 @@ tablesSettings =
   asNavFor: '#section-summaries'
 
 sectionCount = -1
+slickApplied = false
 
 slickSliders = ->
   newSectionCount = @props.sections.length
-  if newSectionCount isnt sectionCount
+  if newSectionCount isnt sectionCount and newSectionCount > 0
     $('#section-summaries').slick summariesSettings
     $('#section-tables').slick tablesSettings
     # remove reactid attribute from cloned slides so as not to upset react
     $('.slick-cloned').removeAttr 'data-reactid'
     sectionCount = newSectionCount
+    slickApplied = true
 
 unslickSliders = ->
   newSectionCount = @props.sections.length
-  if newSectionCount isnt sectionCount
-    $('#section-summaries').slick 'unslick'
-    $('#section-tables').slick 'unslick'
+  if newSectionCount isnt sectionCount and newSectionCount > 0
+    if slickApplied
+      $('#section-summaries').slick 'unslick'
+      $('#section-tables').slick 'unslick'
 
 Sections = React.createClass
   componentDidMount: slickSliders
