@@ -13,7 +13,8 @@ summariesSettings =
 tablesSettings =
   dots: false
   infinite: true
-  speed: 0
+  speed: 500
+  fade: true
   slidesToShow: 1
   slidesToScroll: 1
   arrows: false
