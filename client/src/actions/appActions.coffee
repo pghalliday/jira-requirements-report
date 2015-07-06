@@ -35,3 +35,7 @@ module.exports =
     appDispatcher.handleDataRequestAction
       actionType: appConstants.ACTION_ADD_SECTION
       section: section
+  toggleExpandRequirement: (requirement) ->
+    appDispatcher.handleViewAction
+      actionType: appConstants.ACTION_TOGGLE_EXPAND_REQUIREMENT
+      requirement: requirement

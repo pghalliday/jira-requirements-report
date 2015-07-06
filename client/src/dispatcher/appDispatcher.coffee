@@ -10,5 +10,9 @@ class AppDispatcher extends Dispatcher
     @dispatch
       source: appConstants.ACTION_SOURCE_DATA_REQUEST
       action: action
+  handleViewAction: (action) =>
+    @dispatch
+      source: appConstants.ACTION_SOURCE_VIEW
+      action: action
 
 module.exports = new AppDispatcher()

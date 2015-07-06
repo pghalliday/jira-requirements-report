@@ -49,9 +49,11 @@ class AppStore extends EventEmitter
           progressBar.current = action.current
           @emitChange()
         when appConstants.ACTION_PROGRESS_INCREMENT
-          action = payload.action
           progressBar = @progressGroup.progressBars[action.id]
           progressBar.current++
+          @emitChange()
+        when appConstants.ACTION_TOGGLE_EXPAND_REQUIREMENT
+          action.requirement.expanded = not action.requirement.expanded
           @emitChange()
       true
 

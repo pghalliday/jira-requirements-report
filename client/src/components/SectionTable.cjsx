@@ -8,8 +8,6 @@ Section = React.createClass
       key={requirement.key}
       requirement={requirement}
     /> for requirement in section.requirements)
-    <div>
-      <div>{rows}</div>
-    </div>
+    <div className="row">{rows}</div>
 
 module.exports = Section

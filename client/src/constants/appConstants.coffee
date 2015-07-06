@@ -25,6 +25,8 @@ module.exports =
   ACTION_PROGRESS_INIT: 'progressInit'
   ACTION_PROGRESS_SET: 'progressSet'
   ACTION_PROGRESS_INCREMENT: 'progressIncrement'
+  ACTION_TOGGLE_EXPAND_REQUIREMENT: 'toggleExpandRequirement'
 
   ACTION_SOURCE_PROGRESS_SOCKET: 'progressSocket'
   ACTION_SOURCE_DATA_REQUEST: 'dataRequest'
+  ACTION_SOURCE_VIEW: 'view'

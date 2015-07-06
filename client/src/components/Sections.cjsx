@@ -9,9 +9,11 @@ summariesSettings =
   slidesToShow: 1
   slidesToScroll: 1
   asNavFor: '#section-tables'
+  initialSlide: 0
 
 tablesSettings =
   dots: false
+  adaptiveHeight: true
   infinite: true
   speed: 0
   slidesToShow: 1
@@ -22,9 +24,13 @@ tablesSettings =
 slickSliders = ->
   $('#section-summaries').slick summariesSettings
   $('#section-tables').slick tablesSettings
+  # remove reactid attribute from cloned slides so as not to upset react
+  $('.slick-cloned').removeAttr 'data-reactid'
 
 unslickSliders = ->
+  summariesSettings.initialSlide = $('#section-summaries').slick 'slickCurrentSlide'
   $('#section-summaries').slick 'unslick'
+  tablesSettings.initialSlide = $('#section-tables').slick 'slickCurrentSlide'
   $('#section-tables').slick 'unslick'
 
 Sections = React.createClass
