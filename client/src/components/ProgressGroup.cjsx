@@ -14,8 +14,10 @@ ProgressGroup = React.createClass
     <div className={hidden}>
       <div className="row">
         <div className="large-12 columns">
-          <div>Querying JIRA requirements data ...</div>
-          {rows}
+          <div className="panel callout radius">
+            <h5>Querying JIRA requirements data ...</h5>
+            {rows}
+          </div>
         </div>
       </div>
     </div>
