@@ -19,44 +19,35 @@ tablesSettings =
   arrows: false
   asNavFor: '#section-summaries'
 
-sectionCount = -1
 slickApplied = false
 
 initLibs = ->
   sections = @props.sections
-  newSectionCount = sections.length
-  if newSectionCount isnt sectionCount and newSectionCount > 0
+  if sections and not slickApplied
     $('#section-summaries').slick summariesSettings
     $('#section-tables').slick tablesSettings
     # remove reactid attribute from cloned slides so as not to upset react
     $('.slick-cloned').removeAttr 'data-reactid'
     $('.slick-cloned').find('*').removeAttr 'data-reactid'
-    sectionCount = newSectionCount
     slickApplied = true
 
-uninitLibs = ->
-  newSectionCount = @props.sections.length
-  if newSectionCount isnt sectionCount and newSectionCount > 0
-    if slickApplied
-      $('#section-summaries').slick 'unslick'
-      $('#section-tables').slick 'unslick'
-
 Sections = React.createClass
-  componentDidMount: initLibs
-  componentWillUpdate: uninitLibs
   componentDidUpdate: initLibs
   render: ->
-    sections = this.props.sections
-    summaries = (
-      <div key={'section-summary-' + section.key}>
-        <SectionSummary section={section} ref={section.key}/>
-      </div> for section in sections when section.requirements.length > 0
-    )
-    tables = (
-      <div key={'section-table-' + section.key}>
-        <SectionTable section={section}/>
-      </div> for section in sections when section.requirements.length > 0
-    )
+    sections = @props.sections
+    summaries = []
+    tables = []
+    if sections
+      summaries = (
+        <div key={'section-summary-' + section.key}>
+          <SectionSummary section={section} ref={section.key}/>
+        </div> for section in sections when section.requirements.length > 0
+      )
+      tables = (
+        <div key={'section-table-' + section.key}>
+          <SectionTable section={section}/>
+        </div> for section in sections when section.requirements.length > 0
+      )
     <div>
       <div className="row">
         <div className="large-8 large-offset-2 small-8 small-offset-2 columns">

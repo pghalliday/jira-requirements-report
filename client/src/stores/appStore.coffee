@@ -12,7 +12,7 @@ createProgressBar = (id) ->
 class AppStore extends EventEmitter
   constructor: ->
     @jiraRoot = undefined
-    @sections = []
+    @sections = undefined
     @errorNotification =
       hidden: true
       error: undefined
