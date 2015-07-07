@@ -25,8 +25,8 @@ class AppStore extends EventEmitter
         when appConstants.ACTION_SET_JIRA_ROOT
           @jiraRoot = action.jiraRoot
           @emitChange()
-        when appConstants.ACTION_ADD_SECTION
-          @sections.push action.section
+        when appConstants.ACTION_SET_SECTIONS
+          @sections = action.sections
           @emitChange()
         when appConstants.ACTION_ERROR_SHOW
           @errorNotification.hidden = false

@@ -1,30 +1,49 @@
 React = require 'react'
-Doughnut = require('react-chartjs').Doughnut
+Chartjs = require 'chart.js'
 _ = require 'underscore'
 
 NOTREADY_INDEX = 2
 READY_INDEX = 1
 DONE_INDEX = 0
 
+chartOptions =
+  redraw: true
+  animation: false
+
 SectionSummary = React.createClass
-  getInitialState: ->
-    chartHidden: true
+  _onresize: ->
+    tableDiv = $ '#' + @_tableDivId
+    chartDiv = $ '#' + @_chartDivId
+    chartSize = (Math.min(tableDiv.innerHeight(), chartDiv.innerWidth()) - 15) + 'px'
+    @_chartCanvas.height(chartSize)
+    @_chartCanvas.width(chartSize)
+    # replace cloned chart images with new sizes
+    @_replaceClonedCharts()
+  _replaceClonedCharts: ->
+    if @_chart
+      slickCloned = $ '.slick-cloned'
+      clonedChart = slickCloned.find '.' + @_chartClass
+      clonedChart.replaceWith '<img src="' + @_chart.toBase64Image() + '"/>'
   componentDidMount: ->
+    section = @props.section
     @__onresize = _.debounce @_onresize, 250
     window.addEventListener 'resize', @__onresize
-    @setState
-      chartHidden: false
+    @_chartCanvas = $ '#' + @_chartClass
+    @_onresize()
+    @_chart = new Chartjs(@_chartCanvas.get(0).getContext('2d')).Doughnut @_chartData, chartOptions
+    # replace chart elements in cloned slides with images (but wait
+    # until the slider has actually been initialized)
+    setTimeout @_replaceClonedCharts, 0
   componentWillUnmount: ->
     window.removeEventListener 'resize', @__onresize
-  _onresize: ->
-    @forceUpdate()
   render: ->
     tableStyle =
       width: '100%'
     cellStyle =
       textAlign: 'right'
     section = @props.section
-    chartData = section.requirements.reduce(
+    @_chartClass = 'section-summary-chart-' + section.key
+    @_chartData = section.requirements.reduce(
       (data, requirement) ->
         switch requirement.state
           when 'notready' then data[NOTREADY_INDEX].value++
@@ -48,45 +67,33 @@ SectionSummary = React.createClass
         label: 'Not Ready'
       ]
     )
-    chart = if @state.chartHidden
-      <span>Loading...</span>
-    else
-      chartId = 'chart-section-' + section.key
-      tableId = 'table-section-' + section.key
-      tableDivHeight = $('#' + tableId).height()
-      chartDivWidth = $('#' + chartId).width()
-      chartSize = Math.min(tableDivHeight, chartDivWidth) + 'px'
-      chartStyle =
-        width: chartSize
-        height: chartSize
-      console.log chartSize
-      chartOptions =
-        redraw: true
-      if chartSize isnt '0px'
-        <Doughnut data={chartData} options={chartOptions} style={chartStyle}/>
-      else
-        <span>Loading...</span>
+    @_chartDivId = 'section-summary-chart-div-' + section.key
+    @_tableDivId = 'section-summary-table-div-' + section.key
+    chartStyle =
+      padding: 0
+      margin: 'auto'
+      display: 'block'
     <div className="row">
       <div className="large-12 small-12 columns panel radius">
         <div className="row">
-          <div className="large-6 medium-8 small-12 columns" id={chartId}>
-            {chart}
+          <div className="large-6 medium-8 small-12 columns" id={@_chartDivId}>
+            <canvas id={@_chartClass}  className={@_chartClass} style={chartStyle}/>
           </div>
-          <div className="large-6 medium-4 small-12 columns" id={tableId}>
+          <div className="large-6 medium-4 small-12 columns" id={@_tableDivId}>
             <h3>{section.name}</h3>
             <hr/>
             <table style={tableStyle}>
               <tr>
                 <th>Done</th>
-                <td style={cellStyle}>{chartData[DONE_INDEX].value}</td>
+                <td style={cellStyle}>{@_chartData[DONE_INDEX].value}</td>
               </tr>
               <tr>
                 <th>Ready</th>
-                <td style={cellStyle}>{chartData[READY_INDEX].value}</td>
+                <td style={cellStyle}>{@_chartData[READY_INDEX].value}</td>
               </tr>
               <tr>
                 <th>Not Ready</th>
-                <td style={cellStyle}>{chartData[NOTREADY_INDEX].value}</td>
+                <td style={cellStyle}>{@_chartData[NOTREADY_INDEX].value}</td>
               </tr>
             </table>
             <hr/>

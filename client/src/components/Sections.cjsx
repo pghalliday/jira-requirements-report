@@ -23,7 +23,8 @@ sectionCount = -1
 slickApplied = false
 
 initLibs = ->
-  newSectionCount = @props.sections.length
+  sections = @props.sections
+  newSectionCount = sections.length
   if newSectionCount isnt sectionCount and newSectionCount > 0
     $('#section-summaries').slick summariesSettings
     $('#section-tables').slick tablesSettings
@@ -47,7 +48,7 @@ Sections = React.createClass
     sections = this.props.sections
     summaries = (
       <div key={'section-summary-' + section.key}>
-        <SectionSummary section={section}/>
+        <SectionSummary section={section} ref={section.key}/>
       </div> for section in sections when section.requirements.length > 0
     )
     tables = (

@@ -21,6 +21,7 @@ module.exports = ->
       if error
         appActions.showError error
       else
+        sections = []
         data = response.body
         for id in appConstants.PROGRESS_BAR_IDS
           total = data[appConstants.PROGRESS_BARS[id].key].length
@@ -53,12 +54,13 @@ module.exports = ->
             else
               delete issues[i]
             return
-          appActions.addSection
+          sections.push
             key: 'sprint-' + sprint.id
             name: sprint.name
             requirements: sprint.issues
           return
-        appActions.addSection
+        sections.push
           key: 'backlog'
           name: 'Backlog'
           requirements: data.requirements.filter (requirement) -> typeof requirement isnt 'undefined'
+        appActions.setSections sections

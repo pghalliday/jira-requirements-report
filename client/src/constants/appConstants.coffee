@@ -18,7 +18,7 @@ module.exports =
   ]
 
   ACTION_SET_JIRA_ROOT: 'setJiraRoot'
-  ACTION_ADD_SECTION: 'addSection'
+  ACTION_SET_SECTIONS: 'setSections'
   ACTION_ERROR_SHOW: 'errorShow'
   ACTION_PROGRESS_SHOW: 'progressShow'
   ACTION_PROGRESS_HIDE: 'progressHide'

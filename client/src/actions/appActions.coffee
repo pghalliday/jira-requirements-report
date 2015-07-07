@@ -31,10 +31,10 @@ module.exports =
     appDispatcher.handleDataRequestAction
       actionType: appConstants.ACTION_ERROR_SHOW
       error: error
-  addSection: (section) ->
+  setSections: (sections) ->
     appDispatcher.handleDataRequestAction
-      actionType: appConstants.ACTION_ADD_SECTION
-      section: section
+      actionType: appConstants.ACTION_SET_SECTIONS
+      sections: sections
   toggleExpandRequirement: (requirement) ->
     appDispatcher.handleViewAction
       actionType: appConstants.ACTION_TOGGLE_EXPAND_REQUIREMENT
