@@ -32,7 +32,7 @@
 
 .tasks-enter {
   opacity: 0.01;
-  transition: opacity .5s ease-in;
+  transition: opacity .25s ease-in;
 }
 
 .tasks-enter.tasks-enter-active {
@@ -41,7 +41,7 @@
 
 .tasks-leave {
   opacity: 1;
-  transition: opacity .5s ease-in;
+  transition: opacity .1s ease-in;
 }
 
 .tasks-leave.tasks-leave-active {
