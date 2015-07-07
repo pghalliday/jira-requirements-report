@@ -2,7 +2,8 @@ React = require 'react'
 
 Task = React.createClass
   render: ->
-    task = this.props.task
+    task = @props.task
+    appStore = @props.appStore
     <div>{task.issuetype} - {task.key} - {task.summary}</div>
 
 module.exports = Task

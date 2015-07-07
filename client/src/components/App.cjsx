@@ -15,7 +15,7 @@ App = React.createClass
     <div>
       <ProgressGroup progressGroup={appStore.progressGroup}/>
       <ErrorNotification errorNotification={appStore.errorNotification}/>
-      <Sections sections={appStore.sections}/>
+      <Sections sections={appStore.sections} appStore={appStore}/>
     </div>
 
 module.exports = App

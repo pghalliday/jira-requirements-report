@@ -10,6 +10,11 @@ chartOptions =
   redraw: true
   animation: false
 
+tableStyle =
+  width: '100%'
+cellStyle =
+  textAlign: 'right'
+
 SectionSummary = React.createClass
   _onresize: ->
     tableDiv = $ '#' + @_tableDivId
@@ -38,11 +43,8 @@ SectionSummary = React.createClass
   componentWillUnmount: ->
     window.removeEventListener 'resize', @__onresize
   render: ->
-    tableStyle =
-      width: '100%'
-    cellStyle =
-      textAlign: 'right'
     section = @props.section
+    appStore = @props.appStore
     @_chartClass = 'section-summary-chart-' + section.key
     @_chartData = section.requirements.reduce(
       (data, requirement) ->

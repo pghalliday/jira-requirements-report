@@ -8,10 +8,12 @@ Requirement = React.createClass
     appActions.toggleExpandRequirement @props.requirement
   render: ->
     requirement = @props.requirement
+    appStore = @props.appStore
     rows = if requirement.expanded
       (<Task
         key={task.key}
         task={task}
+        appStore={appStore}
       /> for task in requirement.issuelinks)
     else
       []

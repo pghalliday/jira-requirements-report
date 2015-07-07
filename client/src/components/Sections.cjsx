@@ -35,17 +35,18 @@ Sections = React.createClass
   componentDidUpdate: initLibs
   render: ->
     sections = @props.sections
+    appStore = @props.appStore
     summaries = []
     tables = []
     if sections
       summaries = (
         <div key={'section-summary-' + section.key}>
-          <SectionSummary section={section} ref={section.key}/>
+          <SectionSummary section={section} appStore={appStore}/>
         </div> for section in sections when section.requirements.length > 0
       )
       tables = (
         <div key={'section-table-' + section.key}>
-          <SectionTable section={section}/>
+          <SectionTable section={section} appStore={appStore}/>
         </div> for section in sections when section.requirements.length > 0
       )
     <div>
