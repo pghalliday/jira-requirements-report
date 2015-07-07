@@ -48,21 +48,18 @@
   opacity: 0.01;
 }
 
-.chart {
-  width: 175px;
-  height: 175px;
+.progressCell {
+  width: 100;
 }
 
 @media (min-width: 470px) {
-  .chart {
-    width: 250px;
-    height: 250px;
+  .progressCell {
+    width: 150px;
   }
 }
 
 @media (min-width: 700px) {
-  .chart {
-    width: 275px;
-    height: 275px;
+  .progressCell {
+    width: 175px;
   }
 }
