@@ -14,7 +14,8 @@ SectionSummary = React.createClass
   _onresize: ->
     tableDiv = $ '#' + @_tableDivId
     chartDiv = $ '#' + @_chartDivId
-    chartSize = (Math.min(tableDiv.innerHeight(), chartDiv.innerWidth()) - 15) + 'px'
+    chartDivHorizontalPadding = parseInt(chartDiv.css('padding-left'))
+    chartSize = (Math.min(tableDiv.innerHeight(), chartDiv.innerWidth()) - chartDivHorizontalPadding) + 'px'
     @_chartCanvas.height(chartSize)
     @_chartCanvas.width(chartSize)
     # replace cloned chart images with new sizes

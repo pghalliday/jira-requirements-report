@@ -30,6 +30,7 @@ initLibs = ->
     $('#section-tables').slick tablesSettings
     # remove reactid attribute from cloned slides so as not to upset react
     $('.slick-cloned').removeAttr 'data-reactid'
+    $('.slick-cloned').find('*').removeAttr 'data-reactid'
     sectionCount = newSectionCount
     slickApplied = true
 
