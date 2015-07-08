@@ -3,12 +3,19 @@ React = require 'react'
 NavBar = React.createClass
   render: ->
     title = @props.title
-    <div className="row">
-      <div className="large-12 small-12 columns">
-        <center>
-          <h1>{title}</h1>
-        </center>
+    <div>
+      <div className="fixed">
+        <nav className="top-bar">
+          <ul className="title-area">
+            <li className="name">
+              <h1><a href="#">{title}</a></h1>
+            </li>
+          </ul>
+        </nav>
       </div>
+      <br/>
+      <br/>
+      <br/>
     </div>
 
 module.exports = NavBar
