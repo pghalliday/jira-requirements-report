@@ -31,6 +31,7 @@
     "jira-requirements-data": "^1.2.6",
     "jquery": "^2.1.4",
     "passport": "^0.2.2",
+    "passport-local": "^1.0.0",
     "q": "^1.4.1",
     "react": "^0.13.3",
     "slick-carousel": "^1.5.5",
