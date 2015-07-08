@@ -1,6 +1,8 @@
 appDispatcher = require '../dispatcher/appDispatcher'
 EventEmitter = require('events').EventEmitter
 appConstants = require '../constants/appConstants'
+login = require '../lib/login'
+getData = require '../lib/getData'
 
 CHANGE_EVENT = 'change'
 
@@ -11,6 +13,9 @@ createProgressBar = (id) ->
 
 class AppStore extends EventEmitter
   constructor: ->
+    @user = undefined
+    @loginError = undefined
+    @loginErrorId = 0
     @title = undefined
     @jiraRoot = undefined
     @sections = undefined
@@ -23,6 +28,18 @@ class AppStore extends EventEmitter
     @dispatcherIndex = appDispatcher.register (payload) =>
       action = payload.action
       switch action.actionType
+        when appConstants.ACTION_LOGGED_IN
+          @loginError = undefined
+          @user = action.user
+          @emitChange()
+          getData()
+        when appConstants.ACTION_LOGIN_ERROR
+          @loginErrorId++
+          @loginError = action.error
+          @user = undefined
+          @emitChange()
+        when appConstants.ACTION_LOGIN
+          login action.username, action.password
         when appConstants.ACTION_SET_TITLE
           @title = action.title
           @emitChange()

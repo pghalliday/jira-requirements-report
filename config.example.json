@@ -5,6 +5,7 @@
   "crowdRoot": "https://my.crowd.server/crowd",
   "crowdApplicationName": "my_application_name",
   "crowdApplicationPassword": "my_application_password",
+  "expressSessionSecret": "my_session_secret",
   "strictSSL": true,
   "maxResults": 50,
   "project": "myproject",

@@ -2,6 +2,19 @@ appDispatcher = require '../dispatcher/appDispatcher'
 appConstants = require '../constants/appConstants'
 
 module.exports =
+  login: (params) ->
+    appDispatcher.handleViewAction
+      actionType: appConstants.ACTION_LOGIN
+      username: params.username
+      password: params.password
+  loggedIn: (user) ->
+    appDispatcher.handleViewAction
+      actionType: appConstants.ACTION_LOGGED_IN
+      user: user
+  loginError: (error) ->
+    appDispatcher.handleViewAction
+      actionType: appConstants.ACTION_LOGIN_ERROR
+      error: error
   initProgress: (id, total) ->
     appDispatcher.handleProgressSocketAction
       actionType: appConstants.ACTION_PROGRESS_INIT

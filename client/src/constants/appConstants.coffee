@@ -17,6 +17,9 @@ module.exports =
     label: 'Requirements'
   ]
 
+  ACTION_LOGIN: 'login'
+  ACTION_LOGGED_IN: 'loggedIn'
+  ACTION_LOGIN_ERROR: 'loginError'
   ACTION_SET_TITLE: 'setTitle'
   ACTION_SET_JIRA_ROOT: 'setJiraRoot'
   ACTION_SET_SECTIONS: 'setSections'

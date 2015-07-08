@@ -2,7 +2,7 @@ React = require 'react'
 
 NavBar = React.createClass
   render: ->
-    title = @props.title
+    title = @props.appStore.title
     <div>
       <div className="fixed">
         <nav className="top-bar">

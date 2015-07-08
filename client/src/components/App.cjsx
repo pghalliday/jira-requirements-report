@@ -4,6 +4,7 @@ ErrorNotification = require './ErrorNotification'
 ProgressGroup = require './ProgressGroup'
 Sections = require './Sections'
 NavBar = require './NavBar'
+LoginForm = require './LoginForm'
 
 App = React.createClass
   _onChange: ->
@@ -13,11 +14,17 @@ App = React.createClass
   componentWillUnmount: ->
     appStore.removeChangeListener @_onChange
   render: ->
+    content = if appStore.user
+      <div>
+        <ProgressGroup progressGroup={appStore.progressGroup}/>
+        <Sections sections={appStore.sections} appStore={appStore}/>
+      </div>
+    else
+      <LoginForm appStore={appStore}/>
     <div>
-      <NavBar title={appStore.title}/>
-      <ProgressGroup progressGroup={appStore.progressGroup}/>
+      <NavBar appStore={appStore}/>
       <ErrorNotification errorNotification={appStore.errorNotification}/>
-      <Sections sections={appStore.sections} appStore={appStore}/>
+      {content}
     </div>
 
 module.exports = App
