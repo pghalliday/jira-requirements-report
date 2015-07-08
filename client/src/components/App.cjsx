@@ -3,6 +3,7 @@ appStore = require '../stores/appStore'
 ErrorNotification = require './ErrorNotification'
 ProgressGroup = require './ProgressGroup'
 Sections = require './Sections'
+NavBar = require './NavBar'
 
 App = React.createClass
   _onChange: ->
@@ -13,6 +14,7 @@ App = React.createClass
     appStore.removeChangeListener @_onChange
   render: ->
     <div>
+      <NavBar title={appStore.title}/>
       <ProgressGroup progressGroup={appStore.progressGroup}/>
       <ErrorNotification errorNotification={appStore.errorNotification}/>
       <Sections sections={appStore.sections} appStore={appStore}/>

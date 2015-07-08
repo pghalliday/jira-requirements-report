@@ -11,6 +11,7 @@ createProgressBar = (id) ->
 
 class AppStore extends EventEmitter
   constructor: ->
+    @title = undefined
     @jiraRoot = undefined
     @sections = undefined
     @errorNotification =
@@ -22,6 +23,9 @@ class AppStore extends EventEmitter
     @dispatcherIndex = appDispatcher.register (payload) =>
       action = payload.action
       switch action.actionType
+        when appConstants.ACTION_SET_TITLE
+          @title = action.title
+          @emitChange()
         when appConstants.ACTION_SET_JIRA_ROOT
           @jiraRoot = action.jiraRoot
           @emitChange()

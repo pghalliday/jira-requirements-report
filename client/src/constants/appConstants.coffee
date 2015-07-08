@@ -17,6 +17,7 @@ module.exports =
     label: 'Requirements'
   ]
 
+  ACTION_SET_TITLE: 'setTitle'
   ACTION_SET_JIRA_ROOT: 'setJiraRoot'
   ACTION_SET_SECTIONS: 'setSections'
   ACTION_ERROR_SHOW: 'errorShow'
@@ -30,3 +31,4 @@ module.exports =
   ACTION_SOURCE_PROGRESS_SOCKET: 'progressSocket'
   ACTION_SOURCE_DATA_REQUEST: 'dataRequest'
   ACTION_SOURCE_VIEW: 'view'
+  ACTION_SOURCE_INIT: 'init'

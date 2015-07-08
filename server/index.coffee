@@ -11,9 +11,12 @@ CONFIG = './config.json'
 
 config = JSON.parse fs.readFileSync CONFIG
 
+if not config.strictSSL
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+
 search = (sessionID) ->
   jiraRequirementsData
-    serverRoot: config.serverRoot
+    serverRoot: config.jiraRoot
     strictSSL: config.strictSSL
     user: config.user
     pass: config.pass
@@ -51,7 +54,6 @@ testData = (sessionID) ->
               data
 
 data = (sessionID) ->
-  io.sockets.in(sessionID).emit 'init', config.serverRoot
   if config.testMode
     testData sessionID
   else
@@ -61,11 +63,19 @@ app.use express.static 'client/public'
 app.use '/slick/', express.static 'node_modules/slick-carousel/slick/'
 app.use '/jquery/', express.static 'node_modules/jquery/dist/'
 
+app.set 'views', './server/views'
+app.set 'view engine', 'jade'
+
 app.get '/data', (req, res) ->
   data(req.sessionID)
   .then (data) ->
     res.json data
   .done()
+
+app.get  '/', (req, res) ->
+  res.render 'index',
+    title: config.title
+    jiraRoot: config.jiraRoot
 
 io.on 'connection', (socket) ->
   socket.join socket.handshake.sessionID

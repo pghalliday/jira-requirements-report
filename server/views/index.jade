@@ -1,0 +1,21 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title= title
+    link(rel="stylesheet" href="/slick/slick.css")
+    link(rel="stylesheet" href="/slick/slick-theme.css")
+    link(rel="stylesheet" href="/foundation/css/foundation.css")
+    link(rel="stylesheet" href="/css/index.css")
+    script(src="/foundation/js/vendor/modernizr.js")
+    script(type='text/javascript').
+      var title = '#{title}';
+      var jiraRoot = '#{jiraRoot}';
+  body
+    div(id="app")
+    script(src="/jquery/jquery.min.js")
+    script(src="/slick/slick.min.js")
+    script(src="/js/index.js")
+      

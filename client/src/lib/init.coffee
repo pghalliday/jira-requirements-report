@@ -3,7 +3,9 @@ appActions = require '../actions/appActions'
 io = require 'socket.io-client'
 request = require 'superagent'
 
-module.exports = ->
+module.exports = (title, jiraRoot) ->
+  appActions.setTitle title
+  appActions.setJiraRoot jiraRoot
   progressSocket = io()
   for id in appConstants.PROGRESS_BAR_IDS
     do (id) ->
@@ -11,8 +13,6 @@ module.exports = ->
         appActions.initProgress id, total
       progressSocket.on appConstants.PROGRESS_BARS[id].itemMessage, ->
         appActions.incrementProgress id
-  progressSocket.on 'init', (jiraRoot) ->
-    appActions.setJiraRoot jiraRoot
   progressSocket.on 'connect', ->
     appActions.showProgress()
     request.get('/data').set('Accept', 'application/json').end (error, response) ->

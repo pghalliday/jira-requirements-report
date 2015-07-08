@@ -34,7 +34,7 @@ Requirement = React.createClass
       color: 'white'
       textAlign: 'center'
     <tr>
-      <td>{requirement.issuetype}</td>
+      <td><span className="label">{requirement.issuetype}</span></td>
       <td><a href={appStore.jiraRoot + '/browse/' + requirement.key} target="_blank">{requirement.key}</a></td>
       <td>{requirement.summary}</td>
       <td className="progressCell">

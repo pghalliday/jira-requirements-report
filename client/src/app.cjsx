@@ -8,4 +8,4 @@ if typeof window isnt 'undefined'
       <App />
       document.getElementById 'app'
     )
-    init()
+    init(title, jiraRoot)

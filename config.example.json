@@ -1,6 +1,7 @@
 {
   "testMode": false,
-  "serverRoot": "https://my.jira.server",
+  "title": "My Requirements Report",
+  "jiraRoot": "https://my.jira.server",
   "strictSSL": true,
   "user": "myuser",
   "pass": "mypassword",

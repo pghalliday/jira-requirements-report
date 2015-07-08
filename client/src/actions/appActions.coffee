@@ -17,8 +17,12 @@ module.exports =
     appDispatcher.handleProgressSocketAction
       actionType: appConstants.ACTION_PROGRESS_INCREMENT
       id: id
+  setTitle: (title) ->
+    appDispatcher.handleInitAction
+      actionType: appConstants.ACTION_SET_TITLE
+      title: title
   setJiraRoot: (jiraRoot) ->
-    appDispatcher.handleProgressSocketAction
+    appDispatcher.handleInitAction
       actionType: appConstants.ACTION_SET_JIRA_ROOT
       jiraRoot: jiraRoot
   showProgress: ->
