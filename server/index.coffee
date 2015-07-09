@@ -189,7 +189,7 @@ io.sockets.on 'connection', (socket) ->
     socket.join uid
     socket.emit 'uidRegistered'
 
-server = http.listen 3000, ->
+server = http.listen config.port, ->
   address = server.address()
   host = address.address
   port = address.port

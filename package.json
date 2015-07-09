@@ -7,7 +7,7 @@
     "build": "mkdir -p client/public/js && browserify -t coffee-reactify --extension='.cjsx' --extension='.coffee' -o client/public/js/index.js client/src/app.cjsx",
     "server": "coffee server/index.coffee",
     "prestart": "npm run build",
-    "start": "forever start -l forever.log -o out.log -e err.log -c coffee server/index.coffee",
+    "start": "forever start -a -l forever.log -o out.log -e err.log -c coffee server/index.coffee",
     "stop": "forever stop server/index.coffee"
   },
   "repository": {

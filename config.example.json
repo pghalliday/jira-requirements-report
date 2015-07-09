@@ -1,5 +1,6 @@
 {
   "testMode": false,
+  "port": 1234,
   "title": "My Requirements Report",
   "jiraRoot": "https://my.jira.server",
   "crowdRoot": "https://my.crowd.server/crowd",
