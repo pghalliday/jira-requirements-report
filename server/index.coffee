@@ -85,6 +85,14 @@ passport.use new LocalStrategy (username, password, done) ->
           password: password
           userObject: response.body
 
+passport.serializeUser (user, done) ->
+  console.log user
+  done null, JSON.stringify user
+
+passport.deserializeUser (serialized, done) ->
+  console.log serialized
+  done null, JSON.parse serialized
+
 app.use express.static 'client/public'
 app.use '/slick/', express.static 'node_modules/slick-carousel/slick/'
 app.use '/jquery/', express.static 'node_modules/jquery/dist/'
@@ -114,6 +122,7 @@ app.get '/logout', (req, res) ->
     success: true
 
 app.get '/loggedInUser', (req, res) ->
+  console.log req.cookies
   if req.user
     res.json
       user: req.user.userObject
@@ -121,6 +130,7 @@ app.get '/loggedInUser', (req, res) ->
     res.status(404).send 'Not Found'
 
 app.get '/data', (req, res) ->
+  console.log req.cookies
   if req.user
     data(req.sessionID, req.user.username, req.user.password)
     .then (data) ->

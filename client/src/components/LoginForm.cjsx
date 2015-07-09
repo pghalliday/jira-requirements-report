@@ -10,7 +10,6 @@ LoginForm = React.createClass
   _handlePasswordKeyCode: (event) ->
     if event.keyCode is 13
       button = React.findDOMNode @refs.button
-      button.focus()
       button.click()
   _handleUsernameChange: (event) ->
     @setState
