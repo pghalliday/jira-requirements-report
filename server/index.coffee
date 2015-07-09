@@ -86,11 +86,9 @@ passport.use new LocalStrategy (username, password, done) ->
         done null, user
 
 passport.serializeUser (user, done) ->
-  console.log 'serialize: ' + user
   done null, JSON.stringify user
 
 passport.deserializeUser (serialized, done) ->
-  console.log 'deserialize: ' + serialized
   done null, JSON.parse serialized
 
 app.use express.static 'client/public'
@@ -110,9 +108,20 @@ app.set 'view engine', 'jade'
 app.post '/login', (req, res) ->
   passport.authenticate(
     'local', (error, user, info) ->
-      res.json
-        error: error
-        user: user.userObject if user
+      if error
+        res.json
+          error: error
+      else if user
+        req.login user, (error) ->
+          if error
+            res.json
+              error: error.toString()
+          else
+            res.json
+              user: user.userObject
+      else
+        res.json
+          error: info
   )(req, res)
 
 app.get '/logout', (req, res) ->
