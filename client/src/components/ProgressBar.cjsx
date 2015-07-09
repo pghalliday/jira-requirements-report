@@ -2,8 +2,8 @@ React = require 'react'
 
 ProgressBar = React.createClass
   render: ->
-    progressBar = this.props.progressBar
-    label = this.props.label
+    progressBar = @props.progressBar
+    label = @props.label
     progress = if progressBar.total is -1 then '...' else (progressBar.current + '/' + progressBar.total)
     percent = switch progressBar.total
       when -1 then 0

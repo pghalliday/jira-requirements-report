@@ -2,6 +2,7 @@ appDispatcher = require '../dispatcher/appDispatcher'
 EventEmitter = require('events').EventEmitter
 appConstants = require '../constants/appConstants'
 login = require '../lib/login'
+logout = require '../lib/logout'
 getData = require '../lib/getData'
 
 CHANGE_EVENT = 'change'
@@ -14,6 +15,8 @@ createProgressBar = (id) ->
 class AppStore extends EventEmitter
   constructor: ->
     @user = undefined
+    @uid = undefined
+    @notLoggedIn = false
     @loginError = undefined
     @loginErrorId = 0
     @title = undefined
@@ -29,17 +32,36 @@ class AppStore extends EventEmitter
       action = payload.action
       switch action.actionType
         when appConstants.ACTION_LOGGED_IN
-          @loginError = undefined
-          @user = action.user
+          user = action.user
+          if user
+            @notLoggedIn = false
+            @loginError = undefined
+            @user = action.user
+            @uid = action.uid
+            getData @uid
+          else
+            @notLoggedIn = true
+            @loginError = undefined
+            @user = undefined
+            @uid = action.uid
           @emitChange()
-          getData()
         when appConstants.ACTION_LOGIN_ERROR
           @loginErrorId++
+          @notLoggedIn = true
           @loginError = action.error
           @user = undefined
           @emitChange()
         when appConstants.ACTION_LOGIN
-          login action.username, action.password
+          login action.username, action.password, @uid
+        when appConstants.ACTION_LOGOUT
+          logout()
+        when appConstants.ACTION_LOGGED_OUT
+          @notLoggedIn = true
+          @loginError = undefined
+          @user = undefined
+          @sections = undefined
+          @progressGroup.progressBars = (createProgressBar(id) for id in appConstants.PROGRESS_BAR_IDS)
+          @emitChange()
         when appConstants.ACTION_SET_TITLE
           @title = action.title
           @emitChange()

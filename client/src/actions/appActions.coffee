@@ -7,14 +7,21 @@ module.exports =
       actionType: appConstants.ACTION_LOGIN
       username: params.username
       password: params.password
-  loggedIn: (user) ->
+  loggedIn: (params) ->
     appDispatcher.handleViewAction
       actionType: appConstants.ACTION_LOGGED_IN
-      user: user
+      user: params.user
+      uid: params.uid
   loginError: (error) ->
     appDispatcher.handleViewAction
       actionType: appConstants.ACTION_LOGIN_ERROR
       error: error
+  logout: (params) ->
+    appDispatcher.handleViewAction
+      actionType: appConstants.ACTION_LOGOUT
+  loggedOut: (params) ->
+    appDispatcher.handleViewAction
+      actionType: appConstants.ACTION_LOGGED_OUT
   initProgress: (id, total) ->
     appDispatcher.handleProgressSocketAction
       actionType: appConstants.ACTION_PROGRESS_INIT

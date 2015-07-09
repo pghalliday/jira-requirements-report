@@ -2,7 +2,7 @@ appActions = require '../actions/appActions'
 superagent = require 'superagent'
 Q = require 'q'
 
-module.exports = (username, password) ->
+module.exports = (username, password, uid) ->
   query = superagent
     .post('/login')
     .send
@@ -14,7 +14,9 @@ module.exports = (username, password) ->
       if data.error
         appActions.loginError data.error
       else
-        appActions.loggedIn data.user
+        appActions.loggedIn
+          user: data.user
+          uid: uid
     .fail (error) =>
       appActions.loginError error
     .done()

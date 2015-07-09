@@ -11,4 +11,5 @@ end
 
 guard 'process', name: 'server', command: ['node_modules/.bin/coffee', 'server/index.coffee'] do
   watch(%r{server/.+})
+  watch(%r{config\.json})
 end

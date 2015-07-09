@@ -19,20 +19,25 @@ tablesSettings =
   arrows: false
   asNavFor: '#section-summaries'
 
-slickApplied = false
-
-initLibs = ->
-  sections = @props.sections
-  if sections and not slickApplied
-    $('#section-summaries').slick summariesSettings
-    $('#section-tables').slick tablesSettings
-    # remove reactid attribute from cloned slides so as not to upset react
-    $('.slick-cloned').removeAttr 'data-reactid'
-    $('.slick-cloned').find('*').removeAttr 'data-reactid'
-    slickApplied = true
-
 Sections = React.createClass
-  componentDidUpdate: initLibs
+  _updateSlicks: ->
+    sections = @props.sections
+    if sections and not @_slickApplied
+      $('#section-summaries').slick summariesSettings
+      $('#section-tables').slick tablesSettings
+      # remove reactid attribute from cloned slides so as not to upset react
+      $('.slick-cloned').removeAttr 'data-reactid'
+      $('.slick-cloned').find('*').removeAttr 'data-reactid'
+      @_slickApplied = true
+    else if not sections and @_slickApplied
+      $('#section-summaries').slick 'unslick'
+      $('#section-tables').slick 'unslick'
+      @_slickApplied = false
+  componentDidMount: ->
+    @_slickApplied = false
+    @_updateSlicks()
+  componentDidUpdate: ->
+    @_updateSlicks()
   render: ->
     sections = @props.sections
     appStore = @props.appStore

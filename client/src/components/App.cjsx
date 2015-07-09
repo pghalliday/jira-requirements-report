@@ -17,13 +17,17 @@ App = React.createClass
     content = if appStore.user
       <div>
         <ProgressGroup progressGroup={appStore.progressGroup}/>
+        <ErrorNotification errorNotification={appStore.errorNotification}/>
         <Sections sections={appStore.sections} appStore={appStore}/>
       </div>
-    else
+    else if appStore.notLoggedIn
       <LoginForm appStore={appStore}/>
+    else
+      <div className="row">
+        <div className="small-12 columns"><center>Connecting...</center></div>
+      </div>
     <div>
       <NavBar appStore={appStore}/>
-      <ErrorNotification errorNotification={appStore.errorNotification}/>
       {content}
     </div>
 

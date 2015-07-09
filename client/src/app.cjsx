@@ -8,4 +8,5 @@ if typeof window isnt 'undefined'
       <App />
       document.getElementById 'app'
     )
+    $(document).foundation()
     init(title, jiraRoot)
